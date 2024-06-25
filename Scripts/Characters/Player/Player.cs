@@ -4,61 +4,32 @@ using BrawlInTheBrig.Scripts.General;
 
 public partial class Player : CharacterBody3D
 {
-    private Vector2 _direction;
+    public Vector2 Direction { get; private set; }
 
-    private AnimationPlayer _animationPlayer;
-    [Export]
-    public AnimationPlayer AnimationPlayer
-    {
-        get => _animationPlayer;
-        set
-        {
-            GD.Print("Player AnimationPlayer setter");
-            _animationPlayer = value;
-        }
-    }
-    public Sprite3D Sprite3D;
-
-    public Player() : base()
-    {
-        GD.Print("Player constructor");
-    }
+    public AnimationPlayer AnimationPlayer { get; private set; }
+    public Sprite3D Sprite3D { get; private set; }
+    public StateMachine StateMachine { get; private set; }
 
     /// <inheritdoc />
     public override void _EnterTree()
     {
-        GD.Print("Player _EnterTree");
         AnimationPlayer = (AnimationPlayer)GetNode("AnimationPlayer");
         Sprite3D = (Sprite3D)GetNode("Sprite3D");
-    }
-
-    public override void _Ready()
-    {
-        GD.Print("Player _Ready");
-    }
-
-    /// <inheritdoc />
-    public override void _PhysicsProcess(double delta)
-    {
-        Velocity = new(_direction.X, 0, _direction.Y);
-        Velocity *= 5;
-        
-        MoveAndSlide();
-        FlipHorizontal();
+        StateMachine = (StateMachine)GetNode("StateMachine");
     }
 
     /// <inheritdoc />
     public override void _Input(InputEvent @event)
     {
-        _direction = Input.GetVector(Constants.InputMoveLeft
+        Direction = Input.GetVector(Constants.InputMoveLeft
             , Constants.InputMoveRight
             , Constants.InputMoveForward
             , Constants.InputMoveBackward);
     }
 
-    private void FlipHorizontal()
+    public void FlipHorizontal()
     {
         if (Velocity.X == 0) return;
-        Sprite3D.FlipH = _direction.X < 0;
+        Sprite3D.FlipH = Direction.X < 0;
     }
 }

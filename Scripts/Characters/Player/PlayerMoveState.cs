@@ -1,16 +1,24 @@
 using Godot;
 using System;
 using BrawlInTheBrig.Scripts.General;
+using static Godot.TextServer;
 
-public partial class PlayerIdleState : PlayerBaseState
+public partial class PlayerMoveState : PlayerBaseState
 {
     /// <inheritdoc />
     public override void _PhysicsProcess(double delta)
     {
-        if (PlayerNode.Direction != Vector2.Zero)
+        if (PlayerNode.Direction == Vector2.Zero)
         {
-            PlayerNode.StateMachine.SwitchState<PlayerMoveState>();
+            PlayerNode.StateMachine.SwitchState<PlayerIdleState>();
+            return;
         }
+
+        PlayerNode.Velocity = new(PlayerNode.Direction.X, 0, PlayerNode.Direction.Y);
+        PlayerNode.Velocity *= 5;
+
+        PlayerNode.MoveAndSlide();
+        PlayerNode.FlipHorizontal();
     }
 
     /// <inheritdoc />
@@ -20,7 +28,7 @@ public partial class PlayerIdleState : PlayerBaseState
         switch (what)
         {
             case Constants.StateEnable:
-                PlayerNode.AnimationPlayer.Play(Constants.AnimIdle);
+                PlayerNode.AnimationPlayer.Play(Constants.AnimMove);
                 EnableState();
                 break;
             case Constants.StateDisable:
