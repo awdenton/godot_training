@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using BrawlInTheBrig.Scripts.General;
 
 public partial class Player : CharacterBody3D
@@ -30,6 +29,6 @@ public partial class Player : CharacterBody3D
     public void FlipHorizontal()
     {
         if (Velocity.X == 0) return;
-        Sprite3D.FlipH = Direction.X < 0;
+        Sprite3D.FlipH = Velocity.X < 0;
     }
 }

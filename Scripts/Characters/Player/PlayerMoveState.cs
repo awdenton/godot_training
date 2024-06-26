@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using BrawlInTheBrig.Scripts.General;
-using static Godot.TextServer;
 
 public partial class PlayerMoveState : PlayerBaseState
 {
@@ -10,6 +8,7 @@ public partial class PlayerMoveState : PlayerBaseState
     {
         if (PlayerNode.Direction == Vector2.Zero)
         {
+            PlayerNode.Velocity = Vector3.Zero;
             PlayerNode.StateMachine.SwitchState<PlayerIdleState>();
             return;
         }
@@ -22,27 +21,18 @@ public partial class PlayerMoveState : PlayerBaseState
     }
 
     /// <inheritdoc />
-    public override void _Notification(int what)
-    {
-        base._Notification(what);
-        switch (what)
-        {
-            case Constants.StateEnable:
-                PlayerNode.AnimationPlayer.Play(Constants.AnimMove);
-                EnableState();
-                break;
-            case Constants.StateDisable:
-                DisableState();
-                break;
-        }
-    }
-
-    /// <inheritdoc />
     public override void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed(Constants.InputDash))
         {
             PlayerNode.StateMachine.SwitchState<PlayerDashState>();
         }
+    }
+
+    /// <inheritdoc />
+    protected override void HandleStateEnable()
+    {
+        PlayerNode.AnimationPlayer.Play(Constants.AnimMove);
+        SetStateProcess(true);
     }
 }

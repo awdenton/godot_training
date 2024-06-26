@@ -1,5 +1,5 @@
 ﻿using Godot;
-using System;
+using BrawlInTheBrig.Scripts.General;
 
 public abstract partial class PlayerBaseState : Node
 {
@@ -9,18 +9,29 @@ public abstract partial class PlayerBaseState : Node
     public override void _EnterTree()
     {
         PlayerNode = GetOwner<Player>();
-        DisableState();
+        SetStateProcess(false);
     }
 
-    protected void EnableState()
+    /// <inheritdoc />
+    public override void _Notification(int what)
     {
-        SetPhysicsProcess(true);
-        SetProcessInput(true);
+        base._Notification(what);
+        switch (what)
+        {
+            case Constants.StateEnable:
+                HandleStateEnable();
+                break;
+            case Constants.StateDisable:
+                SetStateProcess(false);
+                break;
+        }
     }
 
-    protected void DisableState()
+    protected abstract void HandleStateEnable();
+
+    protected void SetStateProcess(bool enable)
     {
-        SetPhysicsProcess(false);
-        SetProcessInput(false);
+        SetPhysicsProcess(enable);
+        SetProcessInput(enable);
     }
 }

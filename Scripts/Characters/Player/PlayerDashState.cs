@@ -1,9 +1,9 @@
 using Godot;
-using System;
 using BrawlInTheBrig.Scripts.General;
 
 public partial class PlayerDashState : PlayerBaseState
 {
+    private int _speed = 10;
     private Timer _dashTimerNode;
 
     /// <inheritdoc />
@@ -14,24 +14,33 @@ public partial class PlayerDashState : PlayerBaseState
     }
 
     /// <inheritdoc />
-    public override void _Notification(int what)
+    public override void _PhysicsProcess(double delta)
     {
-        base._Notification(what);
-        switch (what)
+        PlayerNode.MoveAndSlide();
+        PlayerNode.FlipHorizontal();
+    }
+
+    /// <inheritdoc />
+    protected override void HandleStateEnable()
+    {
+        PlayerNode.AnimationPlayer.Play(Constants.AnimDash);
+        PlayerNode.Velocity = new(
+            PlayerNode.Direction.X, 0, PlayerNode.Direction.Y
+        );
+        if (PlayerNode.Velocity == Vector3.Zero)
         {
-            case Constants.StateEnable:
-                PlayerNode.AnimationPlayer.Play(Constants.AnimDash);
-                _dashTimerNode.Start();
-                EnableState();
-                break;
-            case Constants.StateDisable:
-                DisableState();
-                break;
+            PlayerNode.Velocity = PlayerNode.Sprite3D.FlipH
+                ? Vector3.Left
+                : Vector3.Right;
         }
+        PlayerNode.Velocity *= _speed;
+        _dashTimerNode.Start();
+        SetStateProcess(true);
     }
 
     private void HandleDashTimeout()
     {
+        PlayerNode.Velocity = Vector3.Zero;
         PlayerNode.StateMachine.SwitchState<PlayerIdleState>();
     }
 }

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using BrawlInTheBrig.Scripts.General;
 
 public partial class PlayerIdleState : PlayerBaseState
@@ -14,27 +13,18 @@ public partial class PlayerIdleState : PlayerBaseState
     }
 
     /// <inheritdoc />
-    public override void _Notification(int what)
-    {
-        base._Notification(what);
-        switch (what)
-        {
-            case Constants.StateEnable:
-                PlayerNode.AnimationPlayer.Play(Constants.AnimIdle);
-                EnableState();
-                break;
-            case Constants.StateDisable:
-                DisableState();
-                break;
-        }
-    }
-
-    /// <inheritdoc />
     public override void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed(Constants.InputDash))
         {
             PlayerNode.StateMachine.SwitchState<PlayerDashState>();
         }
+    }
+
+    /// <inheritdoc />
+    protected override void HandleStateEnable()
+    {
+        PlayerNode.AnimationPlayer.Play(Constants.AnimIdle);
+        SetStateProcess(true);
     }
 }

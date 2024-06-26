@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Linq;
 using BrawlInTheBrig.Scripts.General;
 
@@ -7,12 +6,12 @@ public partial class StateMachine : Node
 {
     [Export]
     private Node _currentState;
-    [Export]
     private Node[] _states;
 
     /// <inheritdoc />
     public override void _Ready()
     {
+        _states = GetChildren().ToArray();
         _currentState.Notification(Constants.StateEnable);
     }
 

@@ -111,10 +111,9 @@ libraries = {
 "": SubResource("AnimationLibrary_afxev")
 }
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_currentState", "_states")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_currentState")]
 script = ExtResource("34_mhf4b")
 _currentState = NodePath("IdleState")
-_states = [NodePath("IdleState"), NodePath("MoveState"), NodePath("DashState")]
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("32_h0ofn")
