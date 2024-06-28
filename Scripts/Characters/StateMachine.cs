@@ -9,10 +9,15 @@ public partial class StateMachine : Node
     private Node[] _states;
 
     /// <inheritdoc />
-    public override void _Ready()
+    public override void _EnterTree()
     {
         _states = GetChildren().ToArray();
-        _currentState.Notification(Constants.StateEnable);
+    }
+
+    /// <inheritdoc />
+    public override void _Ready()
+    {
+        _currentState.Notification((int)NotificationType.StateEnable);
     }
 
     public void SwitchState<T>()
@@ -20,8 +25,8 @@ public partial class StateMachine : Node
         var newState = _states.FirstOrDefault(state => state is T);
         if (newState is null) return;
         
-        _currentState.Notification(Constants.StateDisable);
+        _currentState.Notification((int)NotificationType.StateDisable);
         _currentState = newState;
-        _currentState?.Notification(Constants.StateEnable);
+        _currentState?.Notification((int)NotificationType.StateEnable);
     }
 }

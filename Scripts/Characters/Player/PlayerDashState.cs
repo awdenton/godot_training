@@ -1,10 +1,11 @@
 using Godot;
 using BrawlInTheBrig.Scripts.General;
 
-public partial class PlayerDashState : PlayerBaseState
+public partial class PlayerDashState : PlayerState
 {
-    private int _speed = 10;
     private Timer _dashTimerNode;
+
+    private const int DashSpeed = 10;
 
     /// <inheritdoc />
     public override void _Ready()
@@ -16,31 +17,28 @@ public partial class PlayerDashState : PlayerBaseState
     /// <inheritdoc />
     public override void _PhysicsProcess(double delta)
     {
-        PlayerNode.MoveAndSlide();
-        PlayerNode.FlipHorizontal();
+        CharacterNode.MoveAndSlide();
+        CharacterNode.FlipHorizontal();
     }
 
     /// <inheritdoc />
     protected override void HandleStateEnable()
     {
-        PlayerNode.AnimationPlayer.Play(Constants.AnimDash);
-        PlayerNode.Velocity = new(
-            PlayerNode.Direction.X, 0, PlayerNode.Direction.Y
-        );
-        if (PlayerNode.Velocity == Vector3.Zero)
+        CharacterNode.AnimationPlayer.Play($"{PlayerAnimationType.Dash}");
+        CharacterNode.Velocity = new Vector3(CharacterNode.Direction.X, 0, CharacterNode.Direction.Y);
+        if (CharacterNode.Velocity == Vector3.Zero)
         {
-            PlayerNode.Velocity = PlayerNode.Sprite3D.FlipH
+            CharacterNode.Velocity = CharacterNode.Sprite3D.FlipH
                 ? Vector3.Left
                 : Vector3.Right;
         }
-        PlayerNode.Velocity *= _speed;
+        CharacterNode.Velocity *= DashSpeed;
         _dashTimerNode.Start();
-        SetStateProcess(true);
     }
 
     private void HandleDashTimeout()
     {
-        PlayerNode.Velocity = Vector3.Zero;
-        PlayerNode.StateMachine.SwitchState<PlayerIdleState>();
+        CharacterNode.Velocity = Vector3.Zero;
+        CharacterNode.StateMachine.SwitchState<PlayerIdleState>();
     }
 }

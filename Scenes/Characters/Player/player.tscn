@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://doquvvgctolst"]
+[gd_scene load_steps=47 format=3 uid="uid://doquvvgctolst"]
 
 [ext_resource type="Texture2D" uid="uid://b8yg3gtct8g1l" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_a5aog"]
 [ext_resource type="Texture2D" uid="uid://bblxaa5yxxw5i" path="res://Assets/Sprites/Characters/Player/Running/Running_000.png" id="1_e5r2b"]
@@ -35,11 +35,11 @@
 [ext_resource type="Script" path="res://Scripts/Characters/Player/PlayerIdleState.cs" id="32_h0ofn"]
 [ext_resource type="Script" path="res://Scripts/Characters/Player/PlayerMoveState.cs" id="33_7r0u8"]
 [ext_resource type="Texture2D" uid="uid://w11bqkdn5nrr" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_000.png" id="33_sgdif"]
-[ext_resource type="Script" path="res://Scripts/Characters/StateMachine.cs" id="34_mhf4b"]
 [ext_resource type="Texture2D" uid="uid://dal3y18p1rbvd" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_001.png" id="34_omrow"]
 [ext_resource type="Texture2D" uid="uid://d1cqdm4fkjj2d" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_002.png" id="35_5jk02"]
 [ext_resource type="Texture2D" uid="uid://c32h3520pbp67" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_003.png" id="36_l5oq5"]
 [ext_resource type="Texture2D" uid="uid://b1dlnui5xx615" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_004.png" id="37_4dvlx"]
+[ext_resource type="PackedScene" uid="uid://m8s1pn8aomcb" path="res://Scenes/Characters/state_machine.tscn" id="38_tpiy3"]
 [ext_resource type="Script" path="res://Scripts/Characters/Player/PlayerDashState.cs" id="41_vi1cl"]
 
 [sub_resource type="Animation" id="Animation_r36ri"]
@@ -99,20 +99,29 @@ _data = {
 "Move": SubResource("Animation_2rsv2")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ex5k2"]
+radius = 0.452978
+height = 1.45577
+
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+floor_max_angle = 1.55334
 script = ExtResource("1_je18r")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.0025
 texture_filter = 0
-texture = ExtResource("2_udmat")
+texture = ExtResource("1_e5r2b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_afxev")
 }
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_currentState")]
-script = ExtResource("34_mhf4b")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ex5k2")
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("_currentState") instance=ExtResource("38_tpiy3")]
 _currentState = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine"]

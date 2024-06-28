@@ -1,30 +1,29 @@
 using Godot;
 using BrawlInTheBrig.Scripts.General;
 
-public partial class PlayerIdleState : PlayerBaseState
+public partial class PlayerIdleState : PlayerState
 {
     /// <inheritdoc />
     public override void _PhysicsProcess(double delta)
     {
-        if (PlayerNode.Direction != Vector2.Zero)
+        if (CharacterNode.Direction != Vector2.Zero)
         {
-            PlayerNode.StateMachine.SwitchState<PlayerMoveState>();
+            CharacterNode.StateMachine.SwitchState<PlayerMoveState>();
         }
     }
 
     /// <inheritdoc />
     public override void _Input(InputEvent @event)
     {
-        if (Input.IsActionJustPressed(Constants.InputDash))
+        if (Input.IsActionJustPressed($"{InputType.Dash}"))
         {
-            PlayerNode.StateMachine.SwitchState<PlayerDashState>();
+            CharacterNode.StateMachine.SwitchState<PlayerDashState>();
         }
     }
 
     /// <inheritdoc />
     protected override void HandleStateEnable()
     {
-        PlayerNode.AnimationPlayer.Play(Constants.AnimIdle);
-        SetStateProcess(true);
+        CharacterNode.AnimationPlayer.Play($"{PlayerAnimationType.Idle}");
     }
 }

@@ -1,38 +1,39 @@
 using Godot;
 using BrawlInTheBrig.Scripts.General;
 
-public partial class PlayerMoveState : PlayerBaseState
+public partial class PlayerMoveState : PlayerState
 {
+    private const int MoveSpeed = 5;
+
     /// <inheritdoc />
     public override void _PhysicsProcess(double delta)
     {
-        if (PlayerNode.Direction == Vector2.Zero)
+        if (CharacterNode.Direction == Vector2.Zero)
         {
-            PlayerNode.Velocity = Vector3.Zero;
-            PlayerNode.StateMachine.SwitchState<PlayerIdleState>();
+            CharacterNode.Velocity = Vector3.Zero;
+            CharacterNode.StateMachine.SwitchState<PlayerIdleState>();
             return;
         }
 
-        PlayerNode.Velocity = new(PlayerNode.Direction.X, 0, PlayerNode.Direction.Y);
-        PlayerNode.Velocity *= 5;
+        CharacterNode.Velocity = new Vector3(CharacterNode.Direction.X, 0, CharacterNode.Direction.Y);
+        CharacterNode.Velocity *= MoveSpeed;
 
-        PlayerNode.MoveAndSlide();
-        PlayerNode.FlipHorizontal();
+        CharacterNode.MoveAndSlide();
+        CharacterNode.FlipHorizontal();
     }
 
     /// <inheritdoc />
     public override void _Input(InputEvent @event)
     {
-        if (Input.IsActionJustPressed(Constants.InputDash))
+        if (Input.IsActionJustPressed($"{InputType.Dash}"))
         {
-            PlayerNode.StateMachine.SwitchState<PlayerDashState>();
+            CharacterNode.StateMachine.SwitchState<PlayerDashState>();
         }
     }
 
     /// <inheritdoc />
     protected override void HandleStateEnable()
     {
-        PlayerNode.AnimationPlayer.Play(Constants.AnimMove);
-        SetStateProcess(true);
+        CharacterNode.AnimationPlayer.Play($"{PlayerAnimationType.Move}");
     }
 }

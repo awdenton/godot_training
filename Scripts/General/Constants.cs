@@ -1,29 +1,32 @@
 ﻿namespace BrawlInTheBrig.Scripts.General;
 
-public static class Constants
+public enum EnemyAnimationType
 {
-    #region Animations
+    Idle,
+    Move,
+    Attack,
+    TakeHit,
+    Death
+}
 
-    public const string AnimIdle = "Idle";
-    public const string AnimMove = "Move";
-    public const string AnimDash = "Dash";
+public enum PlayerAnimationType
+{
+    Idle,
+    Move,
+    Dash
+}
 
-    #endregion
+public enum InputType
+{
+    MoveLeft,
+    MoveRight,
+    MoveForward,
+    MoveBackward,
+    Dash
+}
 
-    #region Inputs
-
-    public const string InputMoveLeft = "MoveLeft";
-    public const string InputMoveRight = "MoveRight";
-    public const string InputMoveForward = "MoveForward";
-    public const string InputMoveBackward = "MoveBackward";
-    public const string InputDash = "Dash";
-
-    #endregion
-
-    #region Notifications
-
-    public const int StateEnable = 5001;
-    public const int StateDisable = 5002;
-
-    #endregion
+public enum NotificationType
+{
+    StateEnable = 5001,
+    StateDisable = 5002
 }
