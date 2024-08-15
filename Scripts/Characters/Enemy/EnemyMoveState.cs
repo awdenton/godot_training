@@ -4,8 +4,6 @@ using System;
 
 public partial class EnemyMoveState : EnemyState
 {
-    private const int MoveSpeed = 4;
-
     /// <inheritdoc />
     public override void _PhysicsProcess(double delta)
     {

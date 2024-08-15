@@ -8,6 +8,8 @@ public abstract partial class CharacterBase : CharacterBody3D
     public Sprite3D Sprite3D { get; protected set; }
     public StateMachine StateMachine { get; protected set; }
 
+    [Export] public Path3D PathNode { get; protected set; }
+
     /// <inheritdoc />
     public override void _EnterTree()
     {
