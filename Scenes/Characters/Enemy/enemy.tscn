@@ -209,15 +209,15 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vnpjt"]
-radius = 1.64339
-height = 5.24726
+radius = 0.624511
+height = 1.48014
 
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_t3dtm")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.0025
-texture = ExtResource("1_l38d3")
+texture = ExtResource("21_qxlt5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite3D")
@@ -226,7 +226,7 @@ libraries = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.460506, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0220473, 0)
 shape = SubResource("CapsuleShape3D_vnpjt")
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("_currentState") instance=ExtResource("101_rfpqi")]
@@ -235,8 +235,8 @@ _currentState = NodePath("ReturnState")
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("57_3j3vq")
 
-[node name="MoveState" type="Node" parent="StateMachine"]
-script = ExtResource("103_0byuq")
-
 [node name="ReturnState" type="Node" parent="StateMachine"]
 script = ExtResource("104_implc")
+
+[node name="MoveState" type="Node" parent="StateMachine"]
+script = ExtResource("103_0byuq")

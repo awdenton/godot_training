@@ -1,6 +1,5 @@
 using BrawlInTheBrig.Scripts.General;
 using Godot;
-using System;
 
 public partial class EnemyIdleState : EnemyState
 {

@@ -17,11 +17,13 @@ public partial class StateMachine : Node
     /// <inheritdoc />
     public override void _Ready()
     {
+        GD.Print(_currentState.GetType());
         _currentState.Notification((int)NotificationType.StateEnable);
     }
 
     public void SwitchState<T>()
     {
+        GD.Print($"Changing state [{this.GetParent().GetType()}] [{typeof(T)}]");
         var newState = _states.FirstOrDefault(state => state is T);
         if (newState is null) return;
         

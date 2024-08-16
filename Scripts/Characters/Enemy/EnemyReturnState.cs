@@ -26,10 +26,12 @@ public partial class EnemyReturnState : EnemyState
     {
         if (CharacterNode.GlobalPosition == _destination)
         {
+            CharacterNode.StateMachine.SwitchState<EnemyIdleState>();
             return;
         }
-        GD.Print($"{CharacterNode.GlobalPosition} - {_destination}");
-        CharacterNode.Velocity = CharacterNode.GlobalPosition.DirectionTo(_destination);
+
+        CharacterNode.Velocity = CharacterNode.GlobalPosition.DirectionTo(_destination) * MoveSpeed;
         CharacterNode.MoveAndSlide();
+        CharacterNode.FlipHorizontal();
     }
 }

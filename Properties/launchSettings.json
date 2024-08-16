@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "BrawlInTheBrig": {
+      "commandName": "Project"
+    },
+    "GD": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\AaronDenton\\Godot_v4.3-stable_mono_win64\\Godot_v4.3-stable_mono_win64.exe",
+      "commandLineArgs": "--path.--verbose",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}

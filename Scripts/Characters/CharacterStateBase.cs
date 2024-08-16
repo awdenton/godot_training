@@ -9,6 +9,11 @@ public abstract partial class CharacterStateBase : Node
     public override void _EnterTree()
     {
         CharacterNode = GetOwner<CharacterBase>();
+    }
+
+    /// <inheritdoc />
+    public override void _Ready()
+    {
         SetStateProcess(false);
     }
 
