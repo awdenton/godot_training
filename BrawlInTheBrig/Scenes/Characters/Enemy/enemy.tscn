@@ -209,7 +209,7 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vnpjt"]
-radius = 0.624511
+radius = 0.545169
 height = 1.48014
 
 [node name="Enemy" type="CharacterBody3D"]
@@ -226,7 +226,7 @@ libraries = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0220473, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0357448, -0.0220473, 0)
 shape = SubResource("CapsuleShape3D_vnpjt")
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("_currentState") instance=ExtResource("101_rfpqi")]
